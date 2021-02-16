@@ -1,38 +1,42 @@
 ---
 
-- name: template /etc/default/tomcat8
-  template:
-    src: tomcat-defaults.j2
-    dest: /etc/default/tomcat8
-  notify: restart tomcat8
-  when: ansible_os_family == 'Debian'
+- name: Creates Cantaloupe directory
+  file:
+    path: /opt/cantaloupe
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
 
-- name: template {{tomcat8_home}}/bin/setenv.sh
-  template:
-    src: setenv.sh.j2
-    dest: "{{tomcat8_home}}/bin/setenv.sh"
-  notify: restart tomcat8
-  when: ansible_os_family == 'RedHat'
+- name: Creates Fits directory
+  file:
+    path: /opt/fits
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
 
-- name: server configuration
-  template:
-    src: server.xml.j2
-    dest: "{{tomcat8_home}}/conf/server.xml"
-  notify: restart tomcat8
-  become: yes
+- name: Creates Cantaloupe cache directory
+  file:
+    path: /var/cache/cantaloupe
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
 
-- name: template tomcat-users.xml
-  template:
-    src: tomcat-users.xml.j2
-    dest: "{{tomcat8_home}}/conf/tomcat-users.xml"
-    owner: "{{ tomcat8_server_user }}"
-    group: "{{ tomcat8_server_group }}"
-    mode: "640"
-  notify: restart tomcat8
+- name: Creates Fits directory
+  file:
+    path: /var/log/cantaloupe
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 2775
 
-- name: start tomcat
-  service:
-    name: "{{tomcat_service_name}}"
-    state: started
-    enabled: yes
-  become: yes
+- name: Template systemd Tomcat9 service
+  template:
+    src: tomcat9.service.j2
+    dest: /etc/systemd/system/tomcat9.service
+
+- name: Reload systemd services
+  command: "systemctl daemon-reload"
+

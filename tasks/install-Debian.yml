@@ -1,13 +1,13 @@
 ---
 
-- name: install tomcat8
+- name: install tomcat9
   apt:
     name: "{{ item }}"
     state: present
     cache_valid_time: 3600
   with_items: "{{ tomcat8_packages }}"
 
-- name: install tomcat8 admin
+- name: install tomcat9 admin
   apt:
     name: "{{ item }}"
     state: present
@@ -15,7 +15,7 @@
   with_items: "{{ tomcat8_admin_packages }}"
   when: tomcat8_admin_install
 
-- name: start tomcat8
+- name: start tomcat9
   service:
-    name: tomcat8
+    name: tomcat9
     state: started

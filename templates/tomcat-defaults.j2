@@ -1,5 +1,5 @@
-TOMCAT8_USER={{tomcat8_server_user}}
-TOMCAT8_GROUP={{tomcat8_server_group}}
+TOMCAT_USER={{tomcat8_server_user}}
+TOMCAT_GROUP={{tomcat8_server_group}}
 {% if tomcat8_java_home is defined %}
 JAVA_HOME="{{tomcat8_java_home}}"
 {% endif %}
@@ -8,7 +8,7 @@ JAVA_OPTS="{{tomcat8_java_opts|join(' ')}}"
 JSP_COMPILER="{{tomcat8_jsp_compiler}}"
 {% endif %}
 {% if tomcat8_tomcat8_security is defined %}
-TOMCAT8_SECURITY="{{tomcat8_tomcat8_security}}"
+TOMCAT_SECURITY="{{tomcat8_tomcat8_security}}"
 {% endif %}
 {% if tomcat8_logfile_days is defined %}
 LOGFILE_DAYS="{{tomcat8_logfile_days}}"
